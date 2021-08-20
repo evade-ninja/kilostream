@@ -50,15 +50,17 @@
 
 			<div class="row">
 				<div class="col-md-4">
-                    <h3>Broadcast Preview</h3>
+                    <h5>Broadcast Preview</h5>
 					<img id="preview" src="" class="img-fluid">
+					<img id="sacrament" src="sac.jpg" class="img-fluid" style="display: none;">
 				    <p>Updated every 15 seconds</p>
 					<div class="btn-toolbar btn-toolbar-lg" role="toolbar">
 						 <div class="btn-group mr-2" role="group">
                             <button class="btn btn-success" id="startbutton" type="button" onclick="startStream();">
                                 Start
                             </button>
-                        </div>
+						</div>
+						
                         <div class="btn-group mr-2" role="group">
                             <button class="btn btn-danger" id="stopbutton" type="button" data-toggle="modal" data-target="#exampleModal">
                                 Stop
@@ -71,7 +73,26 @@
                             </button> 
                         </div>
 					</div>
+					&nbsp;
+					<div class="btn-toolbar btn-toolbar-lg" role="toolbar">
+						<div class="btn-group mr-2" role="group">
+                            <button class="btn btn-warning" id="sacramenttime" type="button" onclick="sacramentTime();">
+                                Sacrament
+							</button>
+							<button class="btn btn-info" id="spktime" type="button" onclick="speakerTime();">
+                                Speaker
+                            </button> 
+						</div>
+						
+						<div class="btn-group mr-2" role="group">
+                            <button class="btn btn-outline-danger" type="button" style="display: none;" id="muted" disabled>
+                                Audio Muted
+                            </button> 
+                        </div>
+					</div>
 				</div>
+				
+
 				<div class="col-md-8">
                     <!--<h3>Camera Positions</h3>
 					<div class="row">

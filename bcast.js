@@ -16,10 +16,12 @@ function getStatus(){
         clearStatusClasses();
 
         let datum = data.Data.ServiceStatus.find(el => el.ID ==="Dynamic_services[0]");
-        console.log(datum);
+        //console.log(datum);
 
         //console.log(data.Data.ServiceStatus.indexOf());
         if(datum.Enable == 0){
+            $('#startbutton').prop('disabled', false);
+            $('#stopbutton').prop('disabled', false);
             $('#streamstate').addClass("btn-outline-info");
             $('#streamstate').html("Ready to Stream");
         }
@@ -34,9 +36,39 @@ function getStatus(){
             $('#streamstate').html("Error!");
         }
     });
+
+    $.get(ip + "/api/v1/setOSDEnable.lua?Stream=main", function(data){
+        //console.log(data);
+        if(data.Data.Enable == 0){
+            $("#sacrament").hide();
+            $("#preview").show();
+            console.log("not sacrament!");
+        }
+        if(data.Data.Enable == 1){
+            $("#sacrament").show();
+            $("#preview").hide();
+            console.log("sacrament!");
+        }
+        
+    });
+
+    $.get(ip + "/api/v1/getAudioSource.lua", function(data){
+        //console.log(data);
+        if(data.Data.CurrentSource == "LINE"){
+            $("#muted").hide();
+            console.log("not mute!");
+        }
+        if(data.Data.CurrentSource == "DIGITAL"){
+            $("#muted").show();
+            console.log("mute!");
+        }
+        
+    });
+
+
 }
 
-var statusTimer =  setInterval(getStatus, 1500);
+var statusTimer =  setInterval(getStatus, 3000);
 
 function startStream(){
     startstop = true;
@@ -76,5 +108,36 @@ function getPreview(){
     $("#preview").attr("src", ip + "/actions/snap.lua?time="+d.getTime());
 }
 
+function sacramentTime(){
+    $.post(ip + "/api/v1/setOSDEnable.lua?Stream=main&Enable=1", function(data){
+        if(data.Result == "200"){
+            $("#sacrament").show();
+            $("#preview").hide();
+        }
+    });
+    $.post(ip + "/api/v1/selectAudioSource.lua?Source=HDMI", function(data){
+        if(data.Result == "200"){
+            $("#muted").show();
+        }
+    });
+
+}
+
+function speakerTime(){
+    $.post(ip + "/api/v1/setOSDEnable.lua?Stream=main&Enable=0", function(data){
+        if(data.Result == "200"){
+            $("#sacrament").hide();
+            $("#preview").show();
+        }
+    });
+    $.post(ip + "/api/v1/selectAudioSource.lua?Source=LINE", function(data){
+        if(data.Result == "200"){
+            $("#muted").hide();
+        }
+    });
+}
+
+
+getStatus();
 getPreview();
 var previewTimer =  setInterval(getPreview, 15000);
