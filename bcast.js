@@ -35,19 +35,24 @@ function getStatus(){
             $('#streamstate').addClass("btn-outline-danger");
             $('#streamstate').html("Error!");
         }
-    });
+    })
+        .fail(function(){
+            clearStatusClasses();
+            $('#streamstate').addClass("btn-outline-danger");
+            $('#streamstate').html("Error!");
+        });
 
     $.get(ip + "/api/v1/setOSDEnable.lua?Stream=main", function(data){
         //console.log(data);
         if(data.Data.Enable == 0){
             $("#sacrament").hide();
             $("#preview").show();
-            console.log("not sacrament!");
+            //console.log("not sacrament!");
         }
         if(data.Data.Enable == 1){
             $("#sacrament").show();
             $("#preview").hide();
-            console.log("sacrament!");
+            //console.log("sacrament!");
         }
         
     });
@@ -56,11 +61,11 @@ function getStatus(){
         //console.log(data);
         if(data.Data.CurrentSource == "LINE"){
             $("#muted").hide();
-            console.log("not mute!");
+            //console.log("not mute!");
         }
         if(data.Data.CurrentSource == "DIGITAL"){
             $("#muted").show();
-            console.log("mute!");
+            //console.log("mute!");
         }
         
     });
@@ -134,6 +139,12 @@ function speakerTime(){
         if(data.Result == "200"){
             $("#muted").hide();
         }
+    });
+}
+
+function PTZ(pos){
+    $post(ip + "/api/v1/ptzControl.lua?Action=load-preset&Id=" + pos, function(data){
+
     });
 }
 
