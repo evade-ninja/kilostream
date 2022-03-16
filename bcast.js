@@ -1,4 +1,23 @@
+//TODO: Remove comments
+
 var startstop = false;
+
+console.log(config);
+
+function loadCameras(){
+    config.cameras.forEach(makeCamera);
+}
+
+function makeCamera(c){
+    console.log(c.title + " " + c.pos + c.img);
+    var cam = config.template;
+    let ret = /\$title/g
+    cam = cam.replace("$img", c.img);
+    cam = cam.replace(ret, c.title);
+    cam = cam.replace("$pos", c.pos);
+    $('#camctl').append(cam);
+}
+
 
 function clearStatusClasses(){
     $('#streamstate').removeClass("btn-outline-success");
@@ -12,13 +31,11 @@ function getStatus(){
     if(startstop == true){
         return;
     }
-    $.get(ip + "/api/v1/getStreamService.lua?Stream=main", function(data){
+    $.get(config.camera_uri + "/api/v1/getStreamService.lua?Stream=main", function(data){
         clearStatusClasses();
 
         let datum = data.Data.ServiceStatus.find(el => el.ID ==="Dynamic_services[0]");
-        //console.log(datum);
 
-        //console.log(data.Data.ServiceStatus.indexOf());
         if(datum.Enable == 0){
             $('#startbutton').prop('disabled', false);
             $('#stopbutton').prop('disabled', false);
@@ -42,30 +59,24 @@ function getStatus(){
             $('#streamstate').html("Error!");
         });
 
-    $.get(ip + "/api/v1/setOSDEnable.lua?Stream=main", function(data){
-        //console.log(data);
+    $.get(config.camera_uri + "/api/v1/setOSDEnable.lua?Stream=main", function(data){
         if(data.Data.Enable == 0){
             $("#sacrament").hide();
             $("#preview").show();
-            //console.log("not sacrament!");
         }
         if(data.Data.Enable == 1){
             $("#sacrament").show();
             $("#preview").hide();
-            //console.log("sacrament!");
         }
         
     });
 
-    $.get(ip + "/api/v1/getAudioSource.lua", function(data){
-        //console.log(data);
+    $.get(config.camera_uri + "/api/v1/getAudioSource.lua", function(data){
         if(data.Data.CurrentSource == "LINE"){
             $("#muted").hide();
-            //console.log("not mute!");
         }
         if(data.Data.CurrentSource == "DIGITAL"){
             $("#muted").show();
-            //console.log("mute!");
         }
         
     });
@@ -82,8 +93,7 @@ function startStream(){
     clearStatusClasses();
     $('#streamstate').addClass("btn-outline-danger");
     $('#streamstate').html("Starting Stream");
-    $.post(ip + "/api/v1/setStreamService.lua?Stream=main&ID=Dynamic_services[0]&Rtmp_push.enabled=1", function(data){
-        //console.log(data);
+    $.post(config.camera_uri + "/api/v1/setStreamService.lua?Stream=main&ID=Dynamic_services[0]&Rtmp_push.enabled=1", function(data){
         if(data.Result == "200"){
             $('#startbutton').prop('disabled', true);
             $('#stopbutton').prop('disabled', false);
@@ -99,7 +109,7 @@ function stopStream(){
     clearStatusClasses();
     $('#streamstate').addClass("btn-outline-danger");
     $('#streamstate').html("Stopping Stream");
-    $.post(ip + "/api/v1/setStreamService.lua?Stream=main&ID=Dynamic_services[0]&Rtmp_push.enabled=0", function(data){
+    $.post(config.camera_uri + "/api/v1/setStreamService.lua?Stream=main&ID=Dynamic_services[0]&Rtmp_push.enabled=0", function(data){
         if(data.Result =="200"){
             $('#startbutton').prop('disabled', false);
             $('#stopbutton').prop('disabled', true);
@@ -110,17 +120,17 @@ function stopStream(){
 
 function getPreview(){
     d = new Date();
-    $("#preview").attr("src", ip + "/actions/snap.lua?time="+d.getTime());
+    $("#preview").attr("src", config.camera_uri + "/actions/snap.lua?time="+d.getTime());
 }
 
 function sacramentTime(){
-    $.post(ip + "/api/v1/setOSDEnable.lua?Stream=main&Enable=1", function(data){
+    $.post(config.camera_uri + "/api/v1/setOSDEnable.lua?Stream=main&Enable=1", function(data){
         if(data.Result == "200"){
             $("#sacrament").show();
             $("#preview").hide();
         }
     });
-    $.post(ip + "/api/v1/selectAudioSource.lua?Source=HDMI", function(data){
+    $.post(config.camera_uri + "/api/v1/selectAudioSource.lua?Source=HDMI", function(data){
         if(data.Result == "200"){
             $("#muted").show();
         }
@@ -129,13 +139,13 @@ function sacramentTime(){
 }
 
 function speakerTime(){
-    $.post(ip + "/api/v1/setOSDEnable.lua?Stream=main&Enable=0", function(data){
+    $.post(config.camera_uri + "/api/v1/setOSDEnable.lua?Stream=main&Enable=0", function(data){
         if(data.Result == "200"){
             $("#sacrament").hide();
             $("#preview").show();
         }
     });
-    $.post(ip + "/api/v1/selectAudioSource.lua?Source=LINE", function(data){
+    $.post(config.camera_uri + "/api/v1/selectAudioSource.lua?Source=LINE", function(data){
         if(data.Result == "200"){
             $("#muted").hide();
         }
@@ -143,12 +153,13 @@ function speakerTime(){
 }
 
 function PTZ(pos){
-    $post(ip + "/api/v1/ptzControl.lua?Action=load-preset&Id=" + pos, function(data){
-
+    $post(config.camera_uri + "/api/v1/ptzControl.lua?Action=load-preset&Id=" + pos, function(data){
+    
     });
+    getPreview();
 }
 
-
+loadCameras();
 getStatus();
 getPreview();
-var previewTimer =  setInterval(getPreview, 15000);
+var previewTimer =  setInterval(getPreview, 10000);

@@ -7,9 +7,6 @@
 
     <title>Stream Controller</title>
 
-    <meta name="description" content="Source code generated using layoutit.com">
-    <meta name="author" content="LayoutIt!">
-
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 	<!--<link href="css/style.css" rel="stylesheet">-->
 
@@ -53,7 +50,7 @@
                     <h5>Broadcast Preview</h5>
 					<img id="preview" src="" class="img-fluid">
 					<img id="sacrament" src="sac.jpg" class="img-fluid" style="display: none;">
-				    <p>Updated every 15 seconds</p>
+				    <p>Updated every 10 seconds</p>
 					<div class="btn-toolbar btn-toolbar-lg" role="toolbar">
 						 <div class="btn-group mr-2" role="group">
                             <button class="btn btn-success" id="startbutton" type="button" onclick="startStream();">
@@ -93,115 +90,10 @@
 				</div>
 				
 
-				<div class="col-md-8" style="display: none;" >
+				<div class="col-md-8" >
                     <h3>Camera Positions</h3>
-					<div class="row">
-						<div class="col-md-4">
-                            
-							<div class="card">
-								<img class="card-img-top" alt="Bootstrap Thumbnail First" src="https://www.layoutit.com/img/people-q-c-600-200-1.jpg">
-								<div class="card-block">
-									<h5 class="card-title">
-										Default Speaker
-									</h5>
-									<p>
-										<button class="btn btn-primary" id=""campos0" type="button" onclick="PTZ(0);">
-                                Move Camera
-                            </button> 
-									</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="card">
-								<img class="card-img-top" alt="Bootstrap Thumbnail Second" src="https://www.layoutit.com/img/city-q-c-600-200-1.jpg">
-								<div class="card-block">
-									<h5 class="card-title">
-										Front of Chapel
-									</h5>
-									<p>
-										<button class="btn btn-primary" id=""campos0" type="button" onclick="PTZ(1);">
-                                Move Camera
-                            </button> 
-									</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="card">
-								<img class="card-img-top" alt="Bootstrap Thumbnail Third" src="https://www.layoutit.com/img/sports-q-c-600-200-1.jpg">
-								<div class="card-block">
-									<h5 class="card-title">
-										Chorister
-									</h5>
-									<p>
-										<button class="btn btn-primary" id=""campos0" type="button" onclick="PTZ(2);">
-                                Move Camera
-                            </button> 
-									</p>
-								</div>
-							</div>
-                        </div>
-                        <div class="col-md-4">
-							<div class="card">
-								<img class="card-img-top" alt="Bootstrap Thumbnail Third" src="https://www.layoutit.com/img/sports-q-c-600-200-1.jpg">
-								<div class="card-block">
-									<h5 class="card-title">
-										Speaker View 1
-									</h5>
-									<p>
-										<button class="btn btn-primary" id=""campos0" type="button" onclick="PTZ(3);">
-                                Move Camera
-                            </button> 
-									</p>
-								</div>
-							</div>
-                        </div>
-                        <div class="col-md-4">
-							<div class="card">
-								<img class="card-img-top" alt="Bootstrap Thumbnail Third" src="https://www.layoutit.com/img/sports-q-c-600-200-1.jpg">
-								<div class="card-block">
-									<h5 class="card-title">
-										Speaker View 2
-									</h5>
-									<p>
-										<button class="btn btn-primary" id=""campos0" type="button" onclick="PTZ(4);">
-                                Move Camera
-                            </button> 
-									</p>
-								</div>
-							</div>
-                        </div>
-                        <div class="col-md-4">
-							<div class="card">
-								<img class="card-img-top" alt="Bootstrap Thumbnail Third" src="https://www.layoutit.com/img/sports-q-c-600-200-1.jpg">
-								<div class="card-block">
-									<h5 class="card-title">
-										Musical Number (Group, West)
-									</h5>
-									<p>
-										<button class="btn btn-primary" id=""campos0" type="button" onclick="PTZ(5);">
-                                Move Camera
-                            </button> 
-									</p>
-								</div>
-							</div>
-                        </div>
-                        <div class="col-md-4">
-							<div class="card">
-								<img class="card-img-top" alt="Bootstrap Thumbnail Third" src="https://www.layoutit.com/img/sports-q-c-600-200-1.jpg">
-								<div class="card-block">
-									<h5 class="card-title">
-										Piano
-									</h5>
-									<p>
-										<button class="btn btn-primary" id=""campos0" type="button" onclick="PTZ(6);">
-                                Move Camera
-                            </button> 
-									</p>
-								</div>
-							</div>
-                        </div>
+					<div class="row" id="camctl">
+						
 					</div>
 				</div>
 			</div>
@@ -212,7 +104,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-	<script src="vars.js"></script>
+	<script src="config.js"></script>
     <script src="bcast.js"></script>
   </body>
 </html>
