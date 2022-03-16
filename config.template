@@ -1,0 +1,22 @@
+var config = 
+{
+    "camera_uri":"http://192.168.1.1",
+    "cameras":[
+        {
+            "title":"Default View",
+            "pos":0,
+            "img":"./img/pos0.png"
+        },
+        {
+            "title":"Alt View",
+            "pos":1,
+            "img":"./img/pos0.png"
+        },
+        {
+            "title":"Other View",
+            "pos":2,
+            "img":"./img/pos0.png"
+        }
+    ],
+    "template":"<div class='col-md-4'><div class='card'><img class='card-img-top' alt='Cam Pos Img' src='$img'><div class='card-block'><h5 class='card-title'>$title</h5><p><button class='btn btn-primary' type='button' onclick='PTZ($pos);'>$title</button></p></div></div></div>"
+};
