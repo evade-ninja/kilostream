@@ -156,7 +156,7 @@ function PTZ(pos){
     $.post(config.camera_uri + "/api/v1/ptzControl.lua?Action=load-preset&Id=" + pos, function(data){
     
     });
-    sleep(1000);
+    await new Promise(r => setTimeout(r, 1000));
     getPreview();
 }
 
