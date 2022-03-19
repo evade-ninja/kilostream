@@ -153,7 +153,7 @@ function speakerTime(){
 }
 
 function PTZ(pos){
-    $post(config.camera_uri + "/api/v1/ptzControl.lua?Action=load-preset&Id=" + pos, function(data){
+    $.post(config.camera_uri + "/api/v1/ptzControl.lua?Action=load-preset&Id=" + pos, function(data){
     
     });
     getPreview();
