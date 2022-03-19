@@ -1,6 +1,7 @@
 //TODO: Remove comments
 
 var startstop = false;
+var refresh;
 
 console.log(config);
 
@@ -152,11 +153,16 @@ function speakerTime(){
     });
 }
 
+function refreshPTZ(){
+    getPreview();
+    clearInterval(refresh);
+}
+
 function PTZ(pos){
     $.post(config.camera_uri + "/api/v1/ptzControl.lua?Action=load-preset&Id=" + pos, function(data){
     
     });
-    await new Promise(r => setTimeout(r, 1000));
+    refresh = setInterval(refreshPTZ, 1000);
     getPreview();
 }
 
